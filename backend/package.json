@@ -4,10 +4,15 @@
   "description": "Backend for student job tracker",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",  
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["backend", "node", "express", "mongoose"],
+  "keywords": [
+    "backend",
+    "node",
+    "express",
+    "mongoose"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
@@ -18,5 +23,6 @@
     "express": "^5.1.0",
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.2"
-  }
+  },
+  "repository": "https://github.com/itachi200218/student-job-tracker"
 }

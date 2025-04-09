@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const dotenv = require('dotenv');
-const jobRoutes = require('./routers/jobRouters');  // Ensure this file exists
-const Job = require('./models/job');  // Ensure this model exists
+const cors = require('cors');
+const jobRoutes = require('./routers/jobRouters');
+const Job = require('./models/job');
 
 // Initialize environment variables
 dotenv.config();
@@ -11,12 +11,15 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 
-// Enable CORS for the frontend URL (Vercel or wherever your frontend is hosted)
-app.use(cors({
-  origin: 'https://student-job-tracker.vercel.app',  // Corrected URL: No trailing slash
-  methods: ['GET', 'POST'],
+// CORS configuration to allow both local and production origins
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://student-job-tracker.vercel.app'],  // Allow both origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow all necessary HTTP methods
   allowedHeaders: ['Content-Type']
-}));
+};
+
+// Use CORS with the above configuration
+app.use(cors(corsOptions));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -30,15 +33,16 @@ app.get('/test', (req, res) => {
 });
 
 // MongoDB connection setup
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URL)
   .then(() => {
     console.log('✅ MongoDB connected');
     // Start server after successful MongoDB connection
-    app.listen(process.env.PORT, () => {
-      console.log(`🚀 Server running on port ${process.env.PORT}`);
+    const port = process.env.PORT || 5000;
+    app.listen(port, () => {
+      console.log(`🚀 Server running on port ${port}`);
     });
   })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err);
-    process.exit(1);  // Exit process if MongoDB connection fails
+    process.exit(1);
   });
