@@ -1,0 +1,20 @@
+# Ignore system files and folders
+.DS_Store
+Thumbs.db
+*.log
+*.bak
+*.swp
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+
+# Ignore Python-related files and folders
+__pycache__/
+*.pyc
+
+# Ignore Node.js related files
+node_modules/
+
+# Ignore virtual environments
+venv/

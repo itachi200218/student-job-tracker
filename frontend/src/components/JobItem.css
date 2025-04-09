@@ -1,0 +1,58 @@
+.job-card {
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
+  }
+  
+  .job-card:hover {
+    transform: scale(1.01);
+  }
+  
+  .job-heading {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    color: #222;
+  }
+  
+  .job-role {
+    font-size: 1rem;
+    color: #888;
+  }
+  
+  .job-select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+  }
+  
+  .job-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .job-link:hover {
+    text-decoration: underline;
+  }
+  
+  .job-delete-button {
+    background-color: #ff4d4f;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  
+  .job-delete-button:hover {
+    background-color: #e04344;
+  }
+  
