@@ -4,7 +4,7 @@ import './JobItem.css';
 
 export default function JobItem({ job, refresh }) {
   const updateStatus = async (e) => {
-    await axios.put(`http://localhost:5000/api/jobs/${job._id}`, {
+    await axios.put(`https://student-job-tracker-1-q8rh.onrender.com/api/jobs/${job._id}`, {
       ...job,
       status: e.target.value,
     });
@@ -12,7 +12,7 @@ export default function JobItem({ job, refresh }) {
   };
 
   const deleteJob = async () => {
-    await axios.delete(`http://localhost:5000/api/jobs/${job._id}`);
+    await axios.delete(`https://student-job-tracker-1-q8rh.onrender.com/api/jobs/${job._id}`);
     refresh();
   };
 

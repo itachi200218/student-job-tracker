@@ -6,9 +6,10 @@ export default function JobList() {
   const [jobs, setJobs] = useState([]);
 
   const fetchJobs = async () => {
-    const res = await axios.get('http://localhost:5000/api/jobs');
+    const res = await axios.get('https://student-job-tracker-1-q8rh.onrender.com/api/jobs');
     setJobs(res.data);
   };
+  
 
   useEffect(() => {
     fetchJobs();
