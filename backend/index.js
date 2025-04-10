@@ -18,10 +18,11 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
-
 app.use(cors(corsOptions));
 
 
+// Use CORS with the above configuration
+app.use(cors(corsOptions));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
