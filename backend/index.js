@@ -13,7 +13,7 @@ const app = express();
 
 // CORS configuration to allow both local and production origins
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://student-job-tracker.vercel.app'],
+  origin: ['http://localhost:3000', 'https://frontend-six-liart-93.vercel.app/'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
