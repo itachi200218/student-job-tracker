@@ -13,10 +13,13 @@ const app = express();
 
 // CORS configuration to allow both local and production origins
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://student-job-tracker.vercel.app'],  // Allow both origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow all necessary HTTP methods
-  allowedHeaders: ['Content-Type']
+  origin: ['http://localhost:3000', 'https://student-job-tracker.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 };
+app.use(cors(corsOptions));
+
 
 // Use CORS with the above configuration
 app.use(cors(corsOptions));
@@ -30,6 +33,11 @@ app.use('/api/jobs', jobRoutes);
 // Test route to verify backend is running
 app.get('/test', (req, res) => {
   res.send('✅ Backend is working!');
+});
+
+// 👇 Root route for Render deployment check
+app.get('/', (req, res) => {
+  res.send('🎯 Student Job Tracker Backend is Live!');
 });
 
 // MongoDB connection setup

@@ -8,12 +8,20 @@ function App() {
   const [filterStatus, setFilterStatus] = useState('');
   const [searchMonthYear, setSearchMonthYear] = useState('');
 
-  // Function to get jobs from the backend
   const getJobs = async () => {
-    const res = await axios.get('http://localhost:5000/api/jobs');
-    setJobs(res.data);
+    try {
+      const baseURL =
+        window.location.hostname === 'localhost'
+          ? 'http://localhost:5000'
+          : 'https://student-job-tracker-1-q8rh.onrender.com';
+  
+      const res = await axios.get(`${baseURL}/api/jobs`);
+      setJobs(res.data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
   };
-
+  
   useEffect(() => {
     getJobs(); // Fetch jobs on component mount
   }, []);
