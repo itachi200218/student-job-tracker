@@ -45,7 +45,7 @@ export default function JobForm({ refresh, setSearchTerm, setSearchDate }) {
     };
 
     try {
-      await axios.post('https://student-job-tracker-1-q8rh.onrender.com', formattedData);
+      await axios.post('https://student-job-tracker-1-q8rh.onrender.com/api/jobs', formattedData);
       setSuccessMessage('Job added successfully!');
       setForm({
         name: '',
