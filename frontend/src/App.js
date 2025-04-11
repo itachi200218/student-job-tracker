@@ -1,29 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import JobItem from './components/JobItem';
-import JobForm from './components/JobForm';  // Assuming you have this form component
+import JobForm from './components/JobForm';
+import './App.css';
 
 function App() {
   const [jobs, setJobs] = useState([]);
   const [filterStatus, setFilterStatus] = useState('');
   const [searchMonthYear, setSearchMonthYear] = useState('');
+  const [notifications, setNotifications] = useState([]);
 
   const getJobs = async () => {
     try {
-      const baseURL =
-        window.location.hostname === 'localhost'
-          ? 'http://localhost:5000'
-          : 'https://student-job-tracker-1-q8rh.onrender.com';
-  
+      const baseURL = 'https://student-job-tracker-1-q8rh.onrender.com';
       const res = await axios.get(`${baseURL}/api/jobs`);
       setJobs(res.data);
     } catch (error) {
-      console.error("Error fetching jobs:", error);
+      showNotification('error', 'Error fetching jobs.');
     }
   };
-  
+
   useEffect(() => {
-    getJobs(); // Fetch jobs on component mount
+    getJobs(); // Fetch jobs on mount
   }, []);
 
   const formatMonthYear = (dateString) => {
@@ -53,10 +51,40 @@ function App() {
     return acc;
   }, {});
 
+  // ✅ Notification function
+  const showNotification = (type, message) => {
+    const id = new Date().getTime();
+    setNotifications((prev) => [...prev, { type, message, id }]);
+
+    setTimeout(() => {
+      setNotifications((prev) => prev.filter((n) => n.id !== id));
+    }, 4000);
+  };
+
+  const handleDeleteJob = async (jobId) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this job?');
+    if (confirmDelete) {
+      try {
+        const baseURL = 'https://student-job-tracker-1-q8rh.onrender.com';
+        await axios.delete(`${baseURL}/api/jobs/${jobId}`);
+        setJobs(jobs.filter((job) => job._id !== jobId));
+        showNotification('warning', 'Job deleted successfully.');
+      } catch (error) {
+        showNotification('error', 'Error deleting job.');
+      }
+    }
+  };
+
   return (
     <div className="App">
-      {/* Add job form */}
-      <JobForm refresh={getJobs} setFilterStatus={setFilterStatus} setSearchTerm={() => {}} setSearchDate={() => {}} />
+      {/* Job Form */}
+      <JobForm
+        refresh={getJobs}
+        setFilterStatus={setFilterStatus}
+        setSearchTerm={() => {}}
+        setSearchDate={() => {}}
+        showNotification={showNotification}
+      />
 
       {/* Filter by Status */}
       <div className="filter-container">
@@ -91,12 +119,30 @@ function App() {
         </select>
       </div>
 
-      {/* Group and display jobs */}
+      {/* Notifications */}
+      <div className="notifications-container">
+        {notifications.map((notification) => (
+          <div
+            key={notification.id}
+            className={`notification ${notification.type}`}
+          >
+            {notification.message}
+          </div>
+        ))}
+      </div>
+
+      {/* Grouped Jobs */}
       {Object.keys(groupedJobs).map((letter) => (
         <div key={letter}>
           <h3>{letter}</h3>
           {groupedJobs[letter].map((job) => (
-            <JobItem key={job._id} job={job} refresh={getJobs} />
+            <JobItem
+              key={job._id}
+              job={job}
+              handleDeleteJob={handleDeleteJob}
+              showNotification={showNotification}  
+              refresh={getJobs}                    
+            />
           ))}
         </div>
       ))}
