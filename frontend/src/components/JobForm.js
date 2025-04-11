@@ -4,7 +4,6 @@ import './JobForm.css';
 
 export default function JobForm({ refresh, setSearchTerm, setSearchDate, showNotification }) {
   const [form, setForm] = useState({
-    name: '',
     company: '',
     role: '',
     appliedDate: '',
@@ -60,7 +59,6 @@ export default function JobForm({ refresh, setSearchTerm, setSearchDate, showNot
       setSuccessMessage('Job added successfully!');
       showNotification('success', 'Job added successfully!');
       setForm({
-        name: '',
         company: '',
         role: '',
         appliedDate: '',
