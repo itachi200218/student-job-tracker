@@ -2,6 +2,11 @@
 
 A full-stack MERN (MongoDB, Express.js, React, Node.js) application that helps students keep track of their job applications.
 
+## Deployed Links
+
+- *Frontend:* [https://student-job-tracker-gray.vercel.app](https://student-job-tracker-gray.vercel.app)
+- *Backend (API):* [https://student-job-tracker-1-q8rh.onrender.com](https://student-job-tracker-1-q8rh.onrender.com)
+
 ## Features
 
 - Add, update, delete job applications
