@@ -71,7 +71,18 @@ yarn start
 
 
 ---
----
+AI Tools Used
+
+I used ChatGPT during the development process to:
+	•	Generate boilerplate code for Express.js routes and MongoDB Mongoose schema
+	•	Assist in creating filtering and update logic
+	•	Write the initial version of the README file
+	•	Get help with optimizing the frontend React components
+	•	Validate my JavaScript DSA solution (duplicate application detection)
+
+After using ChatGPT, I made manual edits to fine-tune the logic, match the UI/UX with my own ideas, and ensure full functionality.
+
+AI tools helped me work faster, but I ensured full understanding and customization of all code.
 
 ## Part 4: DSA Problem – Detect Duplicate Applications
 
