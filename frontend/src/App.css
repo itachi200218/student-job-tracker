@@ -1,38 +1,158 @@
-.App {
-  text-align: center;
+/* Reset default body and html styling */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure full height */
+  width: 100%; /* Ensure full width */
 }
 
+/* General styling for the App */
+.App {
+  background-color: #121212; /* Dark background for the entire app */
+  color:  black; /* Ensure text is visible on dark background */
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Keep the height as full viewport height */
+  font-family: 'Arial', sans-serif; /* Optional: use a clean font for better readability */
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Align elements in a column */
+  width: 100%; /* Ensure the width stretches across the full viewport */
+  box-sizing: border-box; /* Ensure padding and borders are included in the element's total width and height */
+  justify-content: flex-start; /* Align content at the top */
+  align-items: stretch; /* Ensure content stretches to full width */
+}
+
+
+/* Styling for the logo */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  margin-bottom: 20px; /* Adding some space below the logo */
 }
 
+/* Spin animation for logo */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
 
+/* Header styling */
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #1f1f1f; /* Darker background for header */
+  min-height: 100vh; /* Fill the viewport height */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 2vmin); /* Responsive text size */
   color: white;
+  padding: 20px; /* Add some padding for spacing */
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
 }
 
+/* Styling for links */
 .App-link {
-  color: #61dafb;
+  color: #61dafb; /* Bright blue color for links */
+  text-decoration: none; /* Remove underline from links */
+  font-weight: bold; /* Make links stand out */
+  margin-top: 20px; /* Add some spacing at the top */
 }
 
+/* Hover effect for links */
+.App-link:hover {
+  color: #21a1f1; /* Lighter blue on hover */
+  text-decoration: underline; /* Underline on hover for interaction */
+}
+
+/* Optional: Add a smooth fade-in effect for the logo */
 @keyframes App-logo-spin {
-  from {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
+  }
+}
+.notifications-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Base Notification Style */
+.notification {
+  margin-bottom: 16px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  animation: fadeInOut 4s ease-in-out forwards;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 260px;
+  max-width: 90%;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Optional: Close Button */
+.notification .close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  margin-left: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.notification .close-btn:hover {
+  color: #ccc;
+}
+
+/* Success */
+.notification.success {
+  background: linear-gradient(to right, #28a745ee, #218838ee), rgba(40, 167, 69, 0.6);
+}
+
+/* Error */
+.notification.error {
+  background: linear-gradient(to right, #dc3545ee, #c82333ee), rgba(220, 53, 69, 0.6);
+}
+
+/* Warning */
+.notification.warning {
+  background: linear-gradient(to right, #ffc107ee, #e0a800ee), rgba(255, 193, 7, 0.6);
+  color: #000;
+}
+
+/* Fade and Slide */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
   }
 }
