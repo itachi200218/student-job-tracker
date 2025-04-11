@@ -66,5 +66,34 @@ yarn start
 
 
 ---
+---
 
-Let me know if you want to add screenshots or deployment steps to Vercel/Render/Netlify!
+## Part 4: DSA Problem – Detect Duplicate Applications
+
+This is a simple JavaScript function that detects duplicate job applications based on case-insensitive comparison of company and role.
+
+*File Location:* detect-duplicates.js
+
+```javascript
+function hasDuplicateApplications(applications) {
+  const seen = new Set();
+
+  for (const app of applications) {
+    const key = ${app.company.toLowerCase()}-${app.role.toLowerCase()};
+    if (seen.has(key)) {
+      return true;
+    }
+    seen.add(key);
+  }
+
+  return false;
+}
+
+// Example usage
+const apps = [
+  { company: "Google", role: "SDE Intern" },
+  { company: "google", role: "SDE Intern" },
+  { company: "Amazon", role: "Backend" }
+];
+
+console.log(hasDuplicateApplications(apps)); // true
