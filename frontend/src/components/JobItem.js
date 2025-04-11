@@ -1,19 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import './JobItem.css';
 
-export default function JobItem({ job, refresh }) {
+export default function JobItem({ job, refresh, showNotification }) {
+  const [status, setStatus] = useState(job.status);
+  const [appliedDate, setAppliedDate] = useState(new Date(job.appliedDate));
+
+  // ✅ Update status + notify
   const updateStatus = async (e) => {
-    await axios.put(`https://student-job-tracker-1-q8rh.onrender.com/api/jobs/${job._id}`, {
-      ...job,
-      status: e.target.value,
-    });
-    refresh();
+    const newStatus = e.target.value;
+    setStatus(newStatus);
+
+    try {
+      await axios.put(`https://student-job-tracker-1-q8rh.onrender.com/api/jobs/${job._id}`, {
+        status: newStatus,
+        appliedDate: appliedDate.toISOString().split('T')[0],
+      });
+
+      if (typeof refresh === 'function') refresh();
+      if (typeof showNotification === 'function') {
+        showNotification('success', `Status updated to ${newStatus}`);
+      }
+    } catch (error) {
+      if (typeof showNotification === 'function') {
+        showNotification('error', 'Error updating status.');
+      }
+    }
+  };
+
+  // ✅ Update applied date + notify
+  const updateAppliedDate = async (date) => {
+    setAppliedDate(date);
+
+    try {
+      await axios.put(`https://student-job-tracker-1-q8rh.onrender.com/api/jobs/${job._id}`, {
+        status: status,
+        appliedDate: date.toISOString().split('T')[0],
+      });
+
+      if (typeof refresh === 'function') refresh();
+      if (typeof showNotification === 'function') {
+        showNotification('info', `Applied date updated to ${date.toISOString().split('T')[0]}`);
+      }
+    } catch (error) {
+      if (typeof showNotification === 'function') {
+        showNotification('error', 'Error updating applied date.');
+      }
+    }
   };
 
   const deleteJob = async () => {
-    await axios.delete(`https://student-job-tracker-1-q8rh.onrender.com/api/jobs/${job._id}`);
-    refresh();
+    const confirmDelete = window.confirm("Are you sure you want to delete this job?");
+    if (confirmDelete) {
+      try {
+        await axios.delete(`https://student-job-tracker-1-q8rh.onrender.com/api/jobs/${job._id}`);
+        if (typeof refresh === 'function') refresh();
+        if (typeof showNotification === 'function') {
+          showNotification('warning', 'Job deleted successfully.');
+        }
+      } catch (error) {
+        if (typeof showNotification === 'function') {
+          showNotification('error', 'Error deleting job.');
+        }
+      }
+    }
   };
 
   return (
@@ -22,26 +74,35 @@ export default function JobItem({ job, refresh }) {
         {job.company} <span className="job-role">({job.role})</span>
       </h3>
 
-      <p>
+      <div className="job-field">
         <strong>Status:</strong>
-        <select value={job.status} onChange={updateStatus} className="job-select">
+        <select value={status} onChange={updateStatus} className="job-select">
           <option>Applied</option>
           <option>Interview</option>
           <option>Offer</option>
           <option>Rejected</option>
         </select>
-      </p>
+      </div>
 
-      <p>
-        <strong>Applied Date:</strong> {job.appliedDate.substring(0, 10)}
-      </p>
+      <div className="job-field">
+        <strong>Applied Date:</strong>
+        <DatePicker
+          selected={appliedDate}
+          onChange={updateAppliedDate}
+          dateFormat="yyyy-MM-dd"
+          className="job-date-input"
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
+        />
+      </div>
 
       {job.link && (
-        <p>
+        <div className="job-field">
           <a href={job.link} target="_blank" rel="noreferrer" className="job-link">
             View Job Posting
           </a>
-        </p>
+        </div>
       )}
 
       <button onClick={deleteJob} className="job-delete-button">
