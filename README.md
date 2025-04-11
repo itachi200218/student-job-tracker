@@ -75,18 +75,18 @@ This is a simple JavaScript function that detects duplicate job applications bas
 *File Location:* detect-duplicates.js
 
 ```javascript
-function hasDuplicateApplications(applications) {
+function findDuplicateApplication(applications) {
   const seen = new Set();
 
   for (const app of applications) {
-    const key = ${app.company.toLowerCase()}-${app.role.toLowerCase()};
+    const key = `${app.company.toLowerCase()}-${app.role.toLowerCase()}`;
     if (seen.has(key)) {
-      return true;
+      return { duplicate: app }; // Return the duplicate application object
     }
     seen.add(key);
   }
 
-  return false;
+  return null; // No duplicate found
 }
 
 // Example usage
@@ -96,4 +96,9 @@ const apps = [
   { company: "Amazon", role: "Backend" }
 ];
 
-console.log(hasDuplicateApplications(apps)); // true
+const result = findDuplicateApplication(apps);
+if (result) {
+  console.log("Duplicate found:", result.duplicate);
+} else {
+  console.log("No duplicates found.");
+}
