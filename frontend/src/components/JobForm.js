@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './JobForm.css';
 
-export default function JobForm({ refresh, setSearchTerm, setSearchDate }) {
+export default function JobForm({ refresh, setSearchTerm, setSearchDate, showNotification }) {
   const [form, setForm] = useState({
-    name: '',       // Candidate Name
+    name: '',
     company: '',
     role: '',
     appliedDate: '',
@@ -18,6 +18,18 @@ export default function JobForm({ refresh, setSearchTerm, setSearchDate }) {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+
+    // Removed other notifications here
+  };
+
+  const handleDelete = async (jobId) => {
+    try {
+      await axios.delete(`https://student-job-tracker-1-q8rh.onrender.com/api/jobs/${jobId}`);
+      refresh();
+      // Removed delete success/failure notification
+    } catch (error) {
+      // Optional: Log or handle error silently
+    }
   };
 
   const formatLink = (url) => {
@@ -30,13 +42,12 @@ export default function JobForm({ refresh, setSearchTerm, setSearchDate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form fields
     if (!form.name || !form.company || !form.role || !form.appliedDate) {
       setErrorMessage('Please fill in all required fields.');
       return;
     }
-    
-    setErrorMessage(''); // Reset error message if validation passes
+
+    setErrorMessage('');
     setIsLoading(true);
 
     const formattedData = {
@@ -47,6 +58,7 @@ export default function JobForm({ refresh, setSearchTerm, setSearchDate }) {
     try {
       await axios.post('https://student-job-tracker-1-q8rh.onrender.com/api/jobs', formattedData);
       setSuccessMessage('Job added successfully!');
+      showNotification('success', 'Job added successfully!');
       setForm({
         name: '',
         company: '',
@@ -56,7 +68,6 @@ export default function JobForm({ refresh, setSearchTerm, setSearchDate }) {
         status: 'Applied',
       });
       refresh();
-      // Reset or update search terms after adding a new job
       setSearchTerm('');
       setSearchDate('');
     } catch (error) {
@@ -65,6 +76,7 @@ export default function JobForm({ refresh, setSearchTerm, setSearchDate }) {
       setIsLoading(false);
     }
   };
+
 
   return (
     <>
@@ -155,3 +167,4 @@ export default function JobForm({ refresh, setSearchTerm, setSearchDate }) {
     </>
   );
 }
+
