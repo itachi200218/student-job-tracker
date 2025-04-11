@@ -1,18 +1,20 @@
 /* Form Styling */
 .job-form {
-    max-width: 500px;
-    margin: 2rem auto;
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-out;
-  }
-  
-  .job-form:hover {
-    transform: scale(1.02); /* Slight zoom effect on hover */
-  }
-  
+  width: 90%; /* Take 90% of the available width on small screens */
+  max-width: 700px; /* Medium size on larger screens like laptops */
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-out;
+  box-sizing: border-box;
+}
+
+.job-form:hover {
+  transform: scale(1.02); /* Slight zoom effect on hover */
+}
+
   .form-title {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
@@ -126,21 +128,5 @@
     outline: none;
   }
   
-  /* Mobile Responsiveness */
-  @media (max-width: 768px) {
-    .job-form {
-      padding: 1.5rem;
-      max-width: 90%;
-    }
-  
-    .filter-container {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-  
-    .filter-select {
-      width: 100%;
-    }
-  }
+
   
