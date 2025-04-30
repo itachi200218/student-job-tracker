@@ -13,13 +13,11 @@ const app = express();
 
 // CORS configuration to allow both local and production origins
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://student-job-tracker-nine-theta.vercel.app/'],
+  origin: ['http://localhost:3000', 'https://student-job-tracker-nine-theta.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
-app.use(cors(corsOptions));
-
 
 // Use CORS with the above configuration
 app.use(cors(corsOptions));
@@ -35,7 +33,7 @@ app.get('/test', (req, res) => {
   res.send('✅ Backend is working!');
 });
 
-// 👇 Root route for Render deployment check
+// Root route for Render deployment check
 app.get('/', (req, res) => {
   res.send('🎯 Student Job Tracker Backend is Live!');
 });
@@ -54,3 +52,4 @@ mongoose.connect(process.env.MONGO_URL)
     console.error('❌ MongoDB connection error:', err);
     process.exit(1);
   });
+
